@@ -1,95 +1,110 @@
-/**
- * 
- */
 package com.crossover.techtrial.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 
 /**
  * @author kshah
- *
  */
 @Entity
-@Table(name="transaction")
+@Table(name = "transaction")
 public class Transaction implements Serializable {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 8951221480021840448L;
-  
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Long id;
-  
-  @OneToOne
-  @JoinColumn(name = "book_id", referencedColumnName = "id")
-  Book book;
-  
-  @OneToOne
-  @JoinColumn(name="member_id", referencedColumnName="id")
-  Member member;
-  //Date and time of issuance of this book
-  @Column(name="date_of_issue")
-  LocalDateTime dateOfIssue;
-  
-  //Date and time of return of this book
-  @Column(name="date_of_return")
-  LocalDateTime dateOfReturn;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8951221480021840448L;
+    @OneToOne
+    @JoinColumn(name = "member_id", referencedColumnName = "id")
+    public Member member;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne
+    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    private Book book;
+    //Date and time of issuance of this book
+    @Column(name = "date_of_issue")
+    private LocalDateTime dateOfIssue;
 
-  public Long getId() {
-    return id;
-  }
+    //Date and time of return of this book
+    @Column(name = "date_of_return")
+    private LocalDateTime dateOfReturn;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public Book getBook() {
-    return book;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public void setBook(Book book) {
-    this.book = book;
-  }
+    public Book getBook() {
+        return book;
+    }
 
-  public Member getMember() {
-    return member;
-  }
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
-  public void setMember(Member member) {
-    this.member = member;
-  }
+    public Member getMember() {
+        return member;
+    }
 
-  public LocalDateTime getDateOfIssue() {
-    return dateOfIssue;
-  }
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
-  public void setDateOfIssue(LocalDateTime dateOfIssue) {
-    this.dateOfIssue = dateOfIssue;
-  }
+    public LocalDateTime getDateOfIssue() {
+        return dateOfIssue;
+    }
 
-  public LocalDateTime getDateOfReturn() {
-    return dateOfReturn;
-  }
+    public void setDateOfIssue(LocalDateTime dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
 
-  public void setDateOfReturn(LocalDateTime dateOfReturn) {
-    this.dateOfReturn = dateOfReturn;
-  }
+    public LocalDateTime getDateOfReturn() {
+        return dateOfReturn;
+    }
 
-  @Override
-  public String toString() {
-    return "Transaction [id=" + id + ", book=" + book + ", member=" + member + ", dateOfIssue=" + dateOfIssue + ", dateOfReturn=" + dateOfReturn + "]";
-  }
+    public void setDateOfReturn(LocalDateTime dateOfReturn) {
+        this.dateOfReturn = dateOfReturn;
+    }
 
+    @PreUpdate
+    protected void onUpdate() {
+        dateOfReturn = LocalDateTime.now();
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction [id=" + id + ", book=" + book + ", member=" + member + ", dateOfIssue=" + dateOfIssue + ", dateOfReturn=" + dateOfReturn + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Transaction that = (Transaction) o;
+
+        if (!id.equals(that.id)) return false;
+        if (!book.equals(that.book)) return false;
+        if (!member.equals(that.member)) return false;
+        if (!dateOfIssue.equals(that.dateOfIssue)) return false;
+        return dateOfReturn != null ? dateOfReturn.equals(that.dateOfReturn) : that.dateOfReturn == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        int prime = 31;
+        result = prime * result + book.hashCode();
+        result = prime * result + member.hashCode();
+        result = prime * result + dateOfIssue.hashCode();
+        result = prime * result + (dateOfReturn != null ? dateOfReturn.hashCode() : 0);
+        return result;
+    }
 }

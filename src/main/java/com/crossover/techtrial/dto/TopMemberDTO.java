@@ -1,72 +1,56 @@
-/**
- * 
- */
 package com.crossover.techtrial.dto;
 
 /**
  * @author crossover
- *
  */
 public class TopMemberDTO {
-  
-  /**
-   * Constructor for TopMemberDTO
-   * @param memberId
-   * @param name
-   * @param email
-   * @param bookCount
-   */
-  public TopMemberDTO(Long memberId,
-      String name, 
-      String email, 
-      Integer bookCount) {
-    this.name = name;
-    this.email = email;
-    this.memberId = memberId;
-    this.bookCount = bookCount;
-  }
-  
-  public TopMemberDTO() {
-    
-  }
-  
-  private Long memberId;
-  
-  private String name;
-  
-  private String email;
-  
-  private Integer bookCount;
 
-  public Long getMemberId() {
-    return memberId;
-  }
+    private Long id;
+    private String name;
+    private String email;
+    private Long bookCount;
 
-  public void setMemberId(Long memberId) {
-    this.memberId = memberId;
-  }
+    public TopMemberDTO(Long id, String name, String email, Long bookCount) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.bookCount = bookCount;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public TopMemberDTO setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public TopMemberDTO setName(String name) {
+        this.name = name;
+        return this;
+    }
 
-  public Integer getBookCount() {
-    return bookCount;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public void setBookCount(Integer bookCount) {
-    this.bookCount = bookCount;
-  }
+    public TopMemberDTO setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Long getBookCount() {
+        return bookCount;
+    }
+
+    public TopMemberDTO setBookCount(Long bookCount) {
+        this.bookCount = bookCount;
+        return this;
+    }
 }
+
