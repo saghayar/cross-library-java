@@ -5,6 +5,7 @@ import com.crossover.techtrial.model.Member;
 import com.crossover.techtrial.service.MemberService;
 import com.crossover.techtrial.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,13 +71,11 @@ public class MemberController {
      */
     @GetMapping(path = "/api/member/top-member")
     public ResponseEntity<List<TopMemberDTO>> getTopMembers(
-//            @RequestParam(value = "startTime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
-//            @RequestParam(value = "endTime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endTime
+            @RequestParam(value = "startTime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startTime,
+            @RequestParam(value = "endTime") @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endTime
     ) {
-        LocalDateTime startTime = LocalDateTime.now().minusDays(1);
-        LocalDateTime endTime = LocalDateTime.now().plusDays(1);
-        List<TopMemberDTO> topDrivers = transactionService.findByDuration(startTime, endTime);
-        return ResponseEntity.ok(topDrivers);
+        List<TopMemberDTO> topMembers = transactionService.findByDuration(startTime, endTime);
+        return ResponseEntity.ok(topMembers);
     }
 
 }
